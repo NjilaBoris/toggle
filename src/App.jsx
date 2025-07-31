@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { motion } from "motion/react";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function LayoutAnimation() {
+  const [isOn, setIsOn] = useState(false);
+
+  const toggleSwitch = () => setIsOn(!isOn);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="toggle-container">
+      <button
+        className="toggle-button"
+        style={{
+          ...container,
+          justifyContent: "flex-" + (isOn ? "start" : "end"),
+          backgroundColor: isOn ? "green" : "red",
+        }}
+        onClick={toggleSwitch}
+      >
+        <motion.div
+          style={handle}
+          layout
+          transition={{
+            type: "spring",
+            visualDuration: 0.2,
+            bounce: 0.2,
+          }}
+        />
+      </button>
+    </div>
+  );
 }
 
-export default App
+const container = {
+  width: 100,
+  height: 50,
+  position: "relative",
+  backgroundColor: "red",
+  borderRadius: 50,
+  cursor: "pointer",
+  display: "flex",
+  padding: 10,
+};
+
+const handle = {
+  width: "50px",
+  height: "50px",
+  backgroundColor: "#9911ff",
+  borderRadius: "50%",
+  position: "absolute",
+  padding: "1rem",
+  top: 0,
+};
